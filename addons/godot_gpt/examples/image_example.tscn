@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqhggk7mxo215"]
+
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/image_example.gd" id="1_uqlbs"]
+
+[node name="image_example" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_uqlbs")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 421.0
+offset_top = 37.0
+offset_right = 743.0
+offset_bottom = 341.0
