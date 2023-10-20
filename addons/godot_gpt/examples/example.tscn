@@ -1,20 +1,61 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4jcuwb3v5hfi"]
+[gd_scene load_steps=3 format=3 uid="uid://d4jcuwb3v5hfi"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
-[ext_resource type="Script" path="res://addons/godot_gpt/gpt_request.gd" id="2_cialn"]
+[ext_resource type="Script" path="res://addons/godot_gpt/gpt_chat_request.gd" id="2_u3ix2"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lnw2d"]
-
-[node name="example" type="Node2D"]
+[node name="example" type="Control" node_paths=PackedStringArray("gpt", "chat_text", "prompt_input")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_782gx")
+gpt = NodePath("GPTChatRequest")
+chat_text = NodePath("MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel")
+prompt_input = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TextEdit")
 
-[node name="GPTRequest" type="HTTPRequest" parent="."]
-script = ExtResource("2_cialn")
+[node name="GPTChatRequest" type="HTTPRequest" parent="."]
+script = ExtResource("2_u3ix2")
 api_key = "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"
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_left = 366.0
-offset_top = 180.0
-offset_right = 692.0
-offset_bottom = 470.0
-texture = SubResource("NoiseTexture2D_lnw2d")
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Ask ChatGPT a question!"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Submit"
+
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
