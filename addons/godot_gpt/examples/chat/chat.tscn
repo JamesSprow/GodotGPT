@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://d4jcuwb3v5hfi"]
 
-[ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
-[ext_resource type="Script" path="res://addons/godot_gpt/gpt_chat_request.gd" id="2_u3ix2"]
-[ext_resource type="Script" path="res://addons/godot_gpt/examples/prompt_input.gd" id="3_35kvb"]
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/chat/chat.gd" id="1_m74gb"]
+[ext_resource type="Script" path="res://addons/godot_gpt/gpt_chat_request.gd" id="2_7v28p"]
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/chat/prompt_input.gd" id="3_j2wup"]
 
 [node name="example" type="Control" node_paths=PackedStringArray("gpt", "chat_text", "prompt_input")]
 layout_mode = 3
@@ -11,13 +11,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_782gx")
+script = ExtResource("1_m74gb")
 gpt = NodePath("GPTChatRequest")
 chat_text = NodePath("MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel")
 prompt_input = NodePath("MarginContainer/VBoxContainer/HBoxContainer/prompt_input")
 
 [node name="GPTChatRequest" type="HTTPRequest" parent="."]
-script = ExtResource("2_u3ix2")
+script = ExtResource("2_7v28p")
 api_key = "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"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -54,7 +54,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Ask ChatGPT a question!"
 caret_multiple = false
-script = ExtResource("3_35kvb")
+script = ExtResource("3_j2wup")
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
