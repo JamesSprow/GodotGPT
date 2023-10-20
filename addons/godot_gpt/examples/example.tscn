@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4jcuwb3v5hfi"]
+[gd_scene load_steps=4 format=3 uid="uid://d4jcuwb3v5hfi"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
 [ext_resource type="Script" path="res://addons/godot_gpt/gpt_chat_request.gd" id="2_u3ix2"]
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/prompt_input.gd" id="3_35kvb"]
 
 [node name="example" type="Control" node_paths=PackedStringArray("gpt", "chat_text", "prompt_input")]
 layout_mode = 3
@@ -13,7 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_782gx")
 gpt = NodePath("GPTChatRequest")
 chat_text = NodePath("MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel")
-prompt_input = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TextEdit")
+prompt_input = NodePath("MarginContainer/VBoxContainer/HBoxContainer/prompt_input")
 
 [node name="GPTChatRequest" type="HTTPRequest" parent="."]
 script = ExtResource("2_u3ix2")
@@ -47,15 +48,17 @@ size_flags_vertical = 3
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="prompt_input" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Ask ChatGPT a question!"
+caret_multiple = false
+script = ExtResource("3_35kvb")
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Submit"
 
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="prompt_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/prompt_input" to="." method="_on_prompt_submitted"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
