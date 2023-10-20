@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4jcuwb3v5hfi"]
+
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
+[ext_resource type="Script" path="res://addons/godot_gpt/gpt_request.gd" id="2_cialn"]
+
+[node name="example" type="Node2D"]
+script = ExtResource("1_782gx")
+
+[node name="GPTRequest" type="HTTPRequest" parent="."]
+script = ExtResource("2_cialn")
+api_key = "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"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 366.0
+offset_top = 180.0
+offset_right = 692.0
+offset_bottom = 470.0
