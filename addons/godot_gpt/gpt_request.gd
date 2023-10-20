@@ -33,7 +33,16 @@ func on_request_completed(result: int, response_code: int, headers: PackedString
 		return
 
 	var gpt_text: String = response.choices[0].message.content
+	
+	history.append({
+		"role": "system",
+		"content": gpt_text
+	})
+	
 	gpt_request_completed.emit(gpt_text)
+
+func clear_history() -> void:
+	history = []
 
 func gpt_request(prompt: String) -> Error:
 	var messages: Array[Dictionary] = [
@@ -42,6 +51,14 @@ func gpt_request(prompt: String) -> Error:
 			"content": prompt
 		}
 	]
+	return gpt_completions_request(messages)
+
+func gpt_chat_request(prompt: String) -> Error:
+	var messages: Array[Dictionary] = history.duplicate()
+	messages.append({
+		"role": "user",
+		"content": prompt
+	})
 	return gpt_completions_request(messages)
 
 func gpt_completions_request(messages: Array[Dictionary]) -> Error:
