@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqhggk7mxo215"]
+[gd_scene load_steps=6 format=3 uid="uid://dqhggk7mxo215"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/image/image_example.gd" id="1_4t308"]
-[ext_resource type="PackedScene" uid="uid://ckmpdqurkchco" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_qx4gi"]
+[ext_resource type="PackedScene" uid="uid://db4dkaa7rodme" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_qx4gi"]
+[ext_resource type="Script" path="res://addons/godot_gpt/image_request.gd" id="2_sur3a"]
 
 [sub_resource type="Gradient" id="Gradient_6sfu5"]
 
@@ -10,25 +11,44 @@ gradient = SubResource("Gradient_6sfu5")
 width = 512
 height = 512
 
-[node name="image_example" type="Control"]
+[node name="image_example" type="Control" node_paths=PackedStringArray("image_request", "texture_rect", "prompt_input")]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_4t308")
+image_request = NodePath("ImageRequest")
+texture_rect = NodePath("MarginContainer/VBoxContainer/TextureRect")
+prompt_input = NodePath("MarginContainer/VBoxContainer/prompt_input")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ImageRequest" type="HTTPRequest" parent="."]
+script = ExtResource("2_sur3a")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 z_index = 2
 layout_mode = 2
-offset_left = 326.0
-offset_top = 8.0
-offset_right = 838.0
-offset_bottom = 520.0
+size_flags_vertical = 3
 texture = SubResource("GradientTexture2D_g5bdx")
+stretch_mode = 5
 
-[node name="prompt_input" parent="." instance=ExtResource("2_qx4gi")]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 538.0
-offset_right = 1149.0
-offset_bottom = 634.0
+[node name="prompt_input" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_qx4gi")]
+layout_mode = 2
 
-[connection signal="prompt_submitted" from="prompt_input" to="." method="_on_prompt_input_prompt_submitted"]
+[connection signal="prompt_submitted" from="MarginContainer/VBoxContainer/prompt_input" to="." method="_on_prompt_input_prompt_submitted"]
