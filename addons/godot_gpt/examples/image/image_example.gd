@@ -25,14 +25,14 @@ func _ready():
 	image_request.image_request_completed.connect(_on_image_request_completed)
 	image_request.image_request_failed.connect(_on_image_request_failed)
 
-# Function to send an image request based on a given prompt.
+## Function to send an image request based on a given prompt.
 func prompt(prompt: String):
 	# Set the API key for the OpenAIImageRequest object.
 	image_request.api_key = api_key
 	
 	image_request.image_request(prompt)
 
-# Callback function for when an image request is successfully completed.
+## Callback function for when an image request is successfully completed.
 func _on_image_request_completed(image: Image):
 	# Create a new ImageTexture from the received Image.
 	var texture: ImageTexture = ImageTexture.new()
@@ -45,13 +45,13 @@ func _on_image_request_completed(image: Image):
 	# Disable the submit button in the input control.
 	prompt_input.set_button_state(false)
 
-# Callback function for when an image request fails.
+## Callback function for when an image request fails.
 func _on_image_request_failed():
 	# Disable the submit button in the input control to indicate failure.
 	prompt_input.set_button_state(false)
 	state_ready = true
 
-# Callback function to handle when a prompt is submitted using the input control.
+## Callback function to handle when a prompt is submitted using the input control.
 func _on_prompt_input_prompt_submitted(prompt: String):
 	# If the system isn't ready (e.g., a request is still in progress), return without doing anything.
 	if !state_ready:

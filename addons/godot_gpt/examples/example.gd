@@ -22,8 +22,6 @@ func _ready():
 	chat_button.pressed.connect(chat_button_pressed)
 	image_button.pressed.connect(image_button_pressed)
 
-
-
 func transition_to_example(example: EXAMPLES) -> void:
 	if example == current_example:
 		return

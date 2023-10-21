@@ -2,7 +2,7 @@
 # It manages the process of sending a prompt to the API, receiving an image URL in response, and then fetching the actual image.
 
 extends HTTPRequest
-# Assign a custom class name "ImageRequest" for easier reference and instantiation in other scripts.
+# Assign a custom class name "OpenAIImageRequest" for easier reference and instantiation in other scripts.
 class_name OpenAIImageRequest
 
 # Exported variables for configuring the image request.
@@ -14,9 +14,9 @@ class_name OpenAIImageRequest
 # A separate HTTPRequest instance for fetching the actual image from the provided URL.
 var image_http_request: HTTPRequest
 
-# Signals for communicating with external nodes.
-signal image_request_completed # Emitted when an image is successfully retrieved. Passes the Image object.
-signal image_request_failed # Emitted in case of any errors during the image generation or retrieval process.
+## Signals for communicating with external nodes.
+signal image_request_completed ## Emitted when an image is successfully retrieved. Passes the Image object.
+signal image_request_failed ## Emitted in case of any errors during the image generation or retrieval process.
 
 # Function called when the node is added to the scene. It initializes properties and sets up signal connections.
 func _ready() -> void:
@@ -29,8 +29,8 @@ func _ready() -> void:
 	# Connect its built-in signal to our custom handler.
 	image_http_request.request_completed.connect(_image_url_request_completed)
 
-# Callback function that's triggered when the initial API request to OpenAI completes.
-# If successful, it initiates another request to fetch the image from the provided URL.
+## Callback function that's triggered when the initial API request to OpenAI completes.
+## If successful, it initiates another request to fetch the image from the provided URL.
 func on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var json: JSON = JSON.new()
 	# Parse the received response body.
@@ -61,7 +61,7 @@ func on_request_completed(result: int, response_code: int, headers: PackedString
 	if error != OK:
 		push_error("An error occurred requesting the generated image.")
 
-# Function to send an image generation request to OpenAI using the given prompt.
+## Function to send an image generation request to OpenAI using the given prompt.
 func image_request(prompt: String):
 	# Structure the request body with the specified parameters.
 	var body = JSON.new().stringify({
@@ -73,7 +73,7 @@ func image_request(prompt: String):
 	var error: Error = request(api_url, ["Content-Type: application/json", "Authorization: Bearer " + api_key], HTTPClient.METHOD_POST, body)
 	return error
 
-# Callback function that handles the completion of the image URL fetch request.
+## Callback function that handles the completion of the image URL fetch request.
 func _image_url_request_completed(result, response_code, headers, body):
 	# Create a new Image object and load the image data into it.
 	var image: Image = Image.new()
