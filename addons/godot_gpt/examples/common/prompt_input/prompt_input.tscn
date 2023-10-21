@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckmpdqurkchco"]
+[gd_scene load_steps=3 format=3 uid="uid://db4dkaa7rodme"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input_text.gd" id="1_p7rkl"]
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.gd" id="1_u5coi"]
