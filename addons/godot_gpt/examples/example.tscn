@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6lhk5fq6atqq"]
+[gd_scene load_steps=7 format=3 uid="uid://csjidh1fn54hm"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
 [ext_resource type="PackedScene" uid="uid://d4jcuwb3v5hfi" path="res://addons/godot_gpt/examples/chat/chat_example.tscn" id="1_ohi5p"]
-[ext_resource type="PackedScene" uid="uid://d2xa1g2ur8x2i" path="res://addons/godot_gpt/examples/image/image_example.tscn" id="2_gxffp"]
+[ext_resource type="PackedScene" uid="uid://dqhggk7mxo215" path="res://addons/godot_gpt/examples/image/image_example.tscn" id="2_gxffp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5bpil"]
 font_size = 24
