@@ -10,6 +10,7 @@ var loading: bool = false
 signal prompt_submitted(prompt: String)
 
 func _ready() -> void:
+	text_box.placeholder_text = text_box_placeholder
 	text_box.prompt_submitted.connect(submit_prompt)
 	button.pressed.connect(submit_prompt)
 

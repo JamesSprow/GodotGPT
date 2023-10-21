@@ -19,6 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4t308")
+api_key = "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"
 image_request = NodePath("ImageRequest")
 texture_rect = NodePath("MarginContainer/VBoxContainer/TextureRect")
 prompt_input = NodePath("MarginContainer/VBoxContainer/prompt_input")
@@ -42,7 +43,6 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
-z_index = 2
 layout_mode = 2
 size_flags_vertical = 3
 texture = SubResource("GradientTexture2D_g5bdx")
@@ -50,5 +50,6 @@ stretch_mode = 5
 
 [node name="prompt_input" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_qx4gi")]
 layout_mode = 2
+text_box_placeholder = "Describe an image you want to generate!"
 
 [connection signal="prompt_submitted" from="MarginContainer/VBoxContainer/prompt_input" to="." method="_on_prompt_input_prompt_submitted"]

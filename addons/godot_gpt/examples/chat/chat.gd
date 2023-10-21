@@ -1,5 +1,8 @@
 extends Control
 
+@export var api_key: String
+
+@export_group("internal")
 @export var gpt: GPTChatRequest
 @export var chat_history_scroll: ScrollContainer
 @export var chat_history: VBoxContainer
@@ -8,6 +11,7 @@ extends Control
 @export var chat_entry_scene: PackedScene
 
 func _ready():
+	gpt.api_key = api_key
 	gpt.gpt_request_completed.connect(_on_gpt_request_completed)
 	prompt_input.prompt_submitted.connect(send_chat_request)
 
