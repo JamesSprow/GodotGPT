@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://das4l8eywq7at"]
+[gd_scene load_steps=6 format=3 uid="uid://c6lhk5fq6atqq"]
 
 [ext_resource type="PackedScene" uid="uid://d4jcuwb3v5hfi" path="res://addons/godot_gpt/examples/chat/chat.tscn" id="1_ohi5p"]
-[ext_resource type="PackedScene" uid="uid://dqhggk7mxo215" path="res://addons/godot_gpt/examples/image/image_example.tscn" id="2_gxffp"]
+[ext_resource type="PackedScene" uid="uid://d2xa1g2ur8x2i" path="res://addons/godot_gpt/examples/image/image_example.tscn" id="2_gxffp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5bpil"]
 font_size = 24
@@ -9,6 +9,9 @@ font_size = 24
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_487ge"]
 color = Color(0.179688, 0.179688, 0.179688, 1)
 thickness = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_h4gv5"]
+font_size = 32
 
 [node name="example" type="Control"]
 layout_mode = 3
@@ -64,23 +67,61 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.25
+anchor_top = 0.1
 anchor_right = 1.0
-anchor_bottom = 0.75
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="title" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "GodotGPT Example Project"
+label_settings = SubResource("LabelSettings_h4gv5")
+horizontal_alignment = 1
+
+[node name="description" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Please provide an OpenAI API key then select the example you'd like to view."
+horizontal_alignment = 1
+
+[node name="spacer1" type="Control" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "what up"
 
-[node name="Control" type="Control" parent="CenterContainer/VBoxContainer"]
+[node name="api_key_vbox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/api_key_vbox"]
+layout_mode = 2
+text = "This example requires an OpenAI API key to function"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer/api_key_vbox"]
+layout_mode = 2
+placeholder_text = "Paste OpenAI API key in this box"
+alignment = 1
+
+[node name="spacer2" type="Control" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="button_vbox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="chat" type="Button" parent="HBoxContainer/VBoxContainer/button_vbox"]
+layout_mode = 2
+text = "Chat Example"
+
+[node name="image" type="Button" parent="HBoxContainer/VBoxContainer/button_vbox"]
+layout_mode = 2
+text = "Image Example"
