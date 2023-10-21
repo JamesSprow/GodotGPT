@@ -3,24 +3,33 @@ extends HTTPRequest
 # Define a custom class name "GPTRequest" for easy reference and instantiation in other scripts.
 class_name GPTRequest
 
+## Wrapper class that provides an interface for OpenAI ChatGPT completions requests
+
 # Exported variables for configuration of the GPT request parameters.
+## Value between 0.0 and 1.0, higher values mean more random responses
 @export var temperature: float = 0.5
+## Maximum amount of tokens in request
 @export var max_tokens: int = 1024
+## Which ChatGPT model to use
 @export var model: String = "gpt-3.5-turbo"
+## API key used in request to OpenAI ChatGPT
 @export var api_key: String
+## URL endpoint to send requests to
 @export var api_url: String = "https://api.openai.com/v1/chat/completions"
 
 # Define signals to notify other nodes when a GPT request is completed or failed.
+## Emitted when this node receives a valid response from ChatGPT
 signal gpt_request_completed(gpt_text: String)
+## Emitted when this node receives an invalid response from ChatGPT
 signal gpt_request_failed
 
 # Function called when the node is added to the scene. Sets up signal connections.
 func _ready() -> void:
 	# Connect the built-in signal of HTTPRequest to our custom handler.
-	request_completed.connect(on_request_completed)
+	request_completed.connect(_on_request_completed)
 
 # Callback function to handle the completion of the HTTP request.
-func on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var json: JSON = JSON.new()
 	# Parse the received response body.
 	var error: Error = json.parse(body.get_string_from_utf8())
@@ -55,7 +64,7 @@ func on_request_completed(result: int, response_code: int, headers: PackedString
 func _request_completed_post_process(gpt_response: String) -> void:
 	pass
 
-# Function to initiate a GPT request with a simple user prompt.
+## Takes a prompt to send to ChatGPT and sends a request to ChatGPT
 func gpt_request(prompt: String) -> Error:
 	# Create the message structure for the request.
 	var messages: Array[Dictionary] = [
@@ -67,7 +76,7 @@ func gpt_request(prompt: String) -> Error:
 	# Call the function to make the completions request.
 	return gpt_completions_request(messages)
 
-# Function to send a completions request to the GPT API.
+## Function to send a completions request to ChatGPT
 func gpt_completions_request(messages: Array[Dictionary]) -> Error:
 	# Structure the request body with the specified parameters.
 	var body = JSON.new().stringify({
