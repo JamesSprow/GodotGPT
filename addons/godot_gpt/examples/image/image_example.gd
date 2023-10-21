@@ -3,7 +3,7 @@ extends Control
 @export var api_key: String
 
 @export_group("internal")
-@export var image_request: ImageRequest
+@export var image_request: OpenAIImageRequest
 @export var texture_rect: TextureRect
 @export var prompt_input: Control
 
@@ -15,12 +15,6 @@ func _ready():
 	#connect signals from image_request object to functions to be used externally
 	image_request.image_request_completed.connect(_on_image_request_completed)
 	image_request.image_request_failed.connect(_on_image_request_failed)
-	
-	var image: Image = Image.new()
-	image = image.load_from_file("res://addons/godot_gpt/examples/image/test.png")
-	var texture: ImageTexture = ImageTexture.new()
-	texture = texture.create_from_image(image)
-	texture_rect.texture = texture
 
 func prompt(prompt: String):
 	image_request.image_request(prompt)

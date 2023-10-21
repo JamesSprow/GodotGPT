@@ -1,5 +1,5 @@
 extends HTTPRequest
-class_name ImageRequest
+class_name OpenAIImageRequest
 
 @export var n: int = 1 #amount of images to generate
 @export var size: String = "256x256" #resolution of image
