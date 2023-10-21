@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6lhk5fq6atqq"]
+[gd_scene load_steps=7 format=3 uid="uid://c6lhk5fq6atqq"]
 
-[ext_resource type="PackedScene" uid="uid://d4jcuwb3v5hfi" path="res://addons/godot_gpt/examples/chat/chat.tscn" id="1_ohi5p"]
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
+[ext_resource type="PackedScene" uid="uid://d4jcuwb3v5hfi" path="res://addons/godot_gpt/examples/chat/chat_example.tscn" id="1_ohi5p"]
 [ext_resource type="PackedScene" uid="uid://d2xa1g2ur8x2i" path="res://addons/godot_gpt/examples/image/image_example.tscn" id="2_gxffp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5bpil"]
@@ -13,13 +14,23 @@ thickness = 3
 [sub_resource type="LabelSettings" id="LabelSettings_h4gv5"]
 font_size = 32
 
-[node name="example" type="Control"]
+[node name="example" type="Control" node_paths=PackedStringArray("example_container", "example_label", "back_button", "chat_example", "image_example", "menu", "api_key_input", "chat_button", "image_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_782gx")
+example_container = NodePath("example_container")
+example_label = NodePath("example_container/example_header/Label")
+back_button = NodePath("example_container/example_header/Button")
+chat_example = NodePath("example_container/MarginContainer/chat_example")
+image_example = NodePath("example_container/MarginContainer/image_example")
+menu = NodePath("menu")
+api_key_input = NodePath("menu/VBoxContainer/api_key_vbox/LineEdit")
+chat_button = NodePath("menu/VBoxContainer/button_vbox/chat")
+image_button = NodePath("menu/VBoxContainer/button_vbox/image")
 
 [node name="example_container" type="VBoxContainer" parent="."]
 visible = false
@@ -58,7 +69,7 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="chat" parent="example_container/MarginContainer" instance=ExtResource("1_ohi5p")]
+[node name="chat_example" parent="example_container/MarginContainer" instance=ExtResource("1_ohi5p")]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -67,7 +78,7 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="menu" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.1
@@ -77,51 +88,51 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="menu"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="title" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="title" type="Label" parent="menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "GodotGPT Example Project"
 label_settings = SubResource("LabelSettings_h4gv5")
 horizontal_alignment = 1
 
-[node name="description" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="description" type="Label" parent="menu/VBoxContainer"]
 layout_mode = 2
 text = "Please provide an OpenAI API key then select the example you'd like to view."
 horizontal_alignment = 1
 
-[node name="spacer1" type="Control" parent="HBoxContainer/VBoxContainer"]
+[node name="spacer1" type="Control" parent="menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="api_key_vbox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="api_key_vbox" type="VBoxContainer" parent="menu/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/api_key_vbox"]
+[node name="Label" type="Label" parent="menu/VBoxContainer/api_key_vbox"]
 layout_mode = 2
 text = "This example requires an OpenAI API key to function"
 horizontal_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer/api_key_vbox"]
+[node name="LineEdit" type="LineEdit" parent="menu/VBoxContainer/api_key_vbox"]
 layout_mode = 2
 placeholder_text = "Paste OpenAI API key in this box"
 alignment = 1
 
-[node name="spacer2" type="Control" parent="HBoxContainer/VBoxContainer"]
+[node name="spacer2" type="Control" parent="menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="button_vbox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="button_vbox" type="VBoxContainer" parent="menu/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="chat" type="Button" parent="HBoxContainer/VBoxContainer/button_vbox"]
+[node name="chat" type="Button" parent="menu/VBoxContainer/button_vbox"]
 layout_mode = 2
 text = "Chat Example"
 
-[node name="image" type="Button" parent="HBoxContainer/VBoxContainer/button_vbox"]
+[node name="image" type="Button" parent="menu/VBoxContainer/button_vbox"]
 layout_mode = 2
 text = "Image Example"

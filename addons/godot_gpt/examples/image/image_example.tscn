@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqhggk7mxo215"]
+[gd_scene load_steps=6 format=3 uid="uid://d2xa1g2ur8x2i"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/image/image_example.gd" id="1_4t308"]
-[ext_resource type="PackedScene" uid="uid://ckmpdqurkchco" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_qx4gi"]
+[ext_resource type="PackedScene" uid="uid://db4dkaa7rodme" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_qx4gi"]
 [ext_resource type="Script" path="res://addons/godot_gpt/open_ai_image_request.gd" id="2_s857p"]
 
 [sub_resource type="Gradient" id="Gradient_6sfu5"]
@@ -19,7 +19,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4t308")
-api_key = "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"
 image_request = NodePath("OpenAIImageRequest")
 texture_rect = NodePath("VBoxContainer/TextureRect")
 prompt_input = NodePath("VBoxContainer/prompt_input")

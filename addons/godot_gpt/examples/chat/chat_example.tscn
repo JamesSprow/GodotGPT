@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4jcuwb3v5hfi"]
 
-[ext_resource type="Script" path="res://addons/godot_gpt/examples/chat/chat.gd" id="1_m74gb"]
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/chat/chat_example.gd" id="1_1e0cm"]
 [ext_resource type="PackedScene" uid="uid://di8cv15276ai6" path="res://addons/godot_gpt/examples/chat/chat_entry/chat_entry.tscn" id="2_2q4w4"]
 [ext_resource type="Script" path="res://addons/godot_gpt/gpt_chat_request.gd" id="2_7v28p"]
-[ext_resource type="PackedScene" uid="uid://ckmpdqurkchco" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="4_37pu7"]
+[ext_resource type="PackedScene" uid="uid://db4dkaa7rodme" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="4_37pu7"]
 
 [node name="chat" type="Control" node_paths=PackedStringArray("gpt", "chat_history_scroll", "chat_history", "prompt_input")]
 layout_mode = 3
@@ -12,8 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_m74gb")
-api_key = "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"
+script = ExtResource("1_1e0cm")
 gpt = NodePath("GPTChatRequest")
 chat_history_scroll = NodePath("VBoxContainer/ScrollContainer")
 chat_history = NodePath("VBoxContainer/ScrollContainer/chat_history")
