@@ -10,6 +10,7 @@ func _ready():
 	add_child(img_gen)
 	img_gen.api_key = "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"
 	
+	#connect signals from img_gen object to functions to be used externally
 	img_gen.image_request_completed.connect(_on_image_request_completed)
 	img_gen.image_request_failed.connect(_on_image_request_failed)
 	
