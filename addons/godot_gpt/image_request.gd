@@ -56,8 +56,8 @@ func image_request(prompt: String):
 
 # called when the request for the image is completed
 func _image_url_request_completed(result, response_code, headers, body):
-	var image = Image.new()
-	var error = image.load_png_from_buffer(body)
+	var image: Image = Image.new()
+	var error: Error = image.load_png_from_buffer(body)
 	if error != OK:
 		image_request_failed.emit()
 		#push_error("Couldn't load the image.")
