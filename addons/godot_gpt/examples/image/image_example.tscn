@@ -28,16 +28,7 @@ texture = SubResource("GradientTexture2D_g5bdx")
 layout_mode = 0
 offset_left = 15.0
 offset_top = 538.0
-offset_right = 920.0
+offset_right = 1149.0
 offset_bottom = 634.0
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 932.0
-offset_top = 541.0
-offset_right = 1144.0
-offset_bottom = 633.0
-text = "Submit prompt"
-
 [connection signal="prompt_submitted" from="prompt_input" to="." method="_on_prompt_input_prompt_submitted"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

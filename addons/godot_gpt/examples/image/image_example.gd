@@ -31,23 +31,16 @@ func _on_image_request_completed(image: Image):
 	$TextureRect.texture = texture
 	
 	state_ready = true
-	$Button.disabled = false
-	$Button.text = "Submit"
+	$prompt_input.set_button_state(false)
 
 func _on_image_request_failed():
 	state_ready = true
 	$Button.disabled = false
 	$Button.text = "Submit, but last thing errored"
 
-func _on_prompt_input_prompt_submitted():
+func _on_prompt_input_prompt_submitted(prompt):
 	if !state_ready:
 		return
 	state_ready = false
-	$Button.disabled = true
-	$Button.text = "Loading"
-	var p: String = $prompt_input.text
-	prompt(p)
-
-
-func _on_button_pressed():
-	_on_prompt_input_prompt_submitted()
+	$prompt_input.set_button_state(true)
+	prompt(prompt)
