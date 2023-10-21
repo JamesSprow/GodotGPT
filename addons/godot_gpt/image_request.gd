@@ -1,15 +1,16 @@
 extends HTTPRequest
 class_name ImageRequest
 
-@export var n: int = 1
-@export var size: String = "256x256"
-@export var api_key: String
-@export var api_url: String = "https://api.openai.com/v1/images/generations"
+@export var n: int = 1 #amount of images to generate
+@export var size: String = "256x256" #resolution of image
+@export var api_key: String #OpenAI API Key
+@export var api_url: String = "https://api.openai.com/v1/images/generations" #url to send requests to
 
 var image_http_request: HTTPRequest
 
-signal image_request_completed
-signal image_request_failed
+#signals for external use
+signal image_request_completed #emitted when image is ready, and passes an Image object
+signal image_request_failed #emitted when generating an image fails
 
 func _ready() -> void:
 	request_completed.connect(on_request_completed)
@@ -18,6 +19,7 @@ func _ready() -> void:
 	add_child(image_http_request)
 	image_http_request.request_completed.connect(_image_url_request_completed)
 
+#called when the OpenAI API request is completed, and requests the image from received URL
 func on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var json: JSON = JSON.new()
 	var error: Error = json.parse(body.get_string_from_utf8())
@@ -37,27 +39,28 @@ func on_request_completed(result: int, response_code: int, headers: PackedString
 	
 	var image_url: String = response.data[0].url
 	
-	# Perform the HTTP request. The URL below returns a PNG image as of writing.
-	#print("Requesting image from url: ", image_url)
+	#sends request for image given URL
 	error = image_http_request.request(image_url)
 	if error != OK:
 		push_error("An error occurred requesting the generated image.")
 
+#send an api request to OpenAI with the prompt for image
 func image_request(prompt: String):
 	var body = JSON.new().stringify({
 		"prompt": prompt,
-		"n": n,
+		"n": n, 
 		"size": size 
 	})
 	var error: Error = request(api_url, ["Content-Type: application/json", "Authorization: Bearer " + api_key], HTTPClient.METHOD_POST, body)
 	return error
 
-# Called when the image url request is completed.
+# called when the request for the image is completed
 func _image_url_request_completed(result, response_code, headers, body):
 	var image = Image.new()
 	var error = image.load_png_from_buffer(body)
 	if error != OK:
-		push_error("Couldn't load the image.")
+		image_request_failed.emit()
+		#push_error("Couldn't load the image.")
 	
 	image_request_completed.emit(image)
-	print("Successfully acquired generated image")
+	#print("Successfully acquired generated image")
