@@ -9,7 +9,7 @@ class_name OpenAIImageRequest
 var image_http_request: HTTPRequest
 
 #signals for external use
-signal image_request_completed(image: Image) #emitted when image is ready, and passes an Image object
+signal image_request_completed #emitted when image is ready, and passes an Image object
 signal image_request_failed #emitted when generating an image fails
 
 func _ready() -> void:

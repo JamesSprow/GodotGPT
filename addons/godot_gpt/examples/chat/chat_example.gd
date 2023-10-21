@@ -20,8 +20,6 @@ extends Control
 
 # Function called when the node is added to the scene. Initializes various properties and connections.
 func _ready():
-	# Set the API key of the GPTChatRequest object.
-	gpt.api_key = api_key
 	# Connect the signal from GPTChatRequest that is emitted when a request is completed.
 	gpt.gpt_request_completed.connect(_on_gpt_request_completed)
 	# Connect the signal for when the user submits a prompt.
@@ -39,6 +37,9 @@ func send_chat_request(prompt: String) -> void:
 	# If the user's prompt is empty, return without sending a request.
 	if prompt == "":
 		return
+	
+	# Set the API key of the GPTChatRequest object.
+	gpt.api_key = api_key
 	
 	# Add the user's message to the chat.
 	add_text_to_chat("Me", prompt)

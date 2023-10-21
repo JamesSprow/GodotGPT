@@ -39,9 +39,11 @@ func show_example(example: EXAMPLES) -> void:
 		EXAMPLES.CHAT:
 			example_container.show()
 			chat_example.show()
+			chat_example.api_key = api_key_input.text
 		EXAMPLES.IMAGE:
 			example_container.show()
 			image_example.show()
+			image_example.api_key = api_key_input.text
 
 func hide_example(example: EXAMPLES) -> void:
 	match example:

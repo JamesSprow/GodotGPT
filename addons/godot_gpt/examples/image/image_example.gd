@@ -20,9 +20,6 @@ var state_ready: bool = true
 
 # Function called when the node is added to the scene. Initializes properties and sets up signal connections.
 func _ready():
-	# Set the API key for the OpenAIImageRequest object.
-	image_request.api_key = api_key
-	
 	# Connect the signals from OpenAIImageRequest to callback functions in this script.
 	# This allows for handling the results of image requests.
 	image_request.image_request_completed.connect(_on_image_request_completed)
@@ -30,6 +27,9 @@ func _ready():
 
 # Function to send an image request based on a given prompt.
 func prompt(prompt: String):
+	# Set the API key for the OpenAIImageRequest object.
+	image_request.api_key = api_key
+	
 	image_request.image_request(prompt)
 
 # Callback function for when an image request is successfully completed.
