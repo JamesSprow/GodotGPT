@@ -57,7 +57,8 @@ func _image_url_request_completed(result, response_code, headers, body):
 	var image = Image.new()
 	var error = image.load_png_from_buffer(body)
 	if error != OK:
-		push_error("Couldn't load the image.")
+		image_request_failed.emit()
+		#push_error("Couldn't load the image.")
 	
 	image_request_completed.emit(image)
-	print("Successfully acquired generated image")
+	#print("Successfully acquired generated image")

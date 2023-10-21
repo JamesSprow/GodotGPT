@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqhggk7mxo215"]
+[gd_scene load_steps=5 format=3 uid="uid://dqhggk7mxo215"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/image/image_example.gd" id="1_4t308"]
+[ext_resource type="PackedScene" uid="uid://ckmpdqurkchco" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_qx4gi"]
 
 [sub_resource type="Gradient" id="Gradient_6sfu5"]
 
@@ -22,3 +23,21 @@ offset_top = 8.0
 offset_right = 838.0
 offset_bottom = 520.0
 texture = SubResource("GradientTexture2D_g5bdx")
+
+[node name="prompt_input" parent="." instance=ExtResource("2_qx4gi")]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 538.0
+offset_right = 920.0
+offset_bottom = 634.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 932.0
+offset_top = 541.0
+offset_right = 1144.0
+offset_bottom = 633.0
+text = "Submit prompt"
+
+[connection signal="prompt_submitted" from="prompt_input" to="." method="_on_prompt_input_prompt_submitted"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
