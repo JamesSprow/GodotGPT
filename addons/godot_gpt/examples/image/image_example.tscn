@@ -1,14 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqhggk7mxo215"]
+[gd_scene load_steps=3 format=3 uid="uid://dqhggk7mxo215"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/image/image_example.gd" id="1_4t308"]
 [ext_resource type="PackedScene" uid="uid://ckmpdqurkchco" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_qx4gi"]
-
-[sub_resource type="Gradient" id="Gradient_6sfu5"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_g5bdx"]
-gradient = SubResource("Gradient_6sfu5")
-width = 512
-height = 512
 
 [node name="image_example" type="Control"]
 layout_mode = 3
@@ -22,7 +15,6 @@ offset_left = 326.0
 offset_top = 8.0
 offset_right = 838.0
 offset_bottom = 520.0
-texture = SubResource("GradientTexture2D_g5bdx")
 
 [node name="prompt_input" parent="." instance=ExtResource("2_qx4gi")]
 layout_mode = 0

@@ -13,12 +13,6 @@ func _ready():
 	#connect signals from img_gen object to functions to be used externally
 	img_gen.image_request_completed.connect(_on_image_request_completed)
 	img_gen.image_request_failed.connect(_on_image_request_failed)
-	
-	var image: Image = Image.new()
-	image = image.load_from_file("res://addons/godot_gpt/examples/image/test.png")
-	var texture: ImageTexture = ImageTexture.new()
-	texture = texture.create_from_image(image)
-	$TextureRect.texture = texture
 
 func prompt(prompt: String):
 	print("Prompting")
