@@ -10,7 +10,6 @@ func _gui_input(event: InputEvent) -> void:
 		return
 	if event.keycode != KEY_ENTER:
 		return
-	print("enter ", Input.is_key_pressed(KEY_SHIFT))
 	if Input.is_key_pressed(KEY_SHIFT):
 		# add newline to text because enter event doesn't propagate?
 		# also need to handle moving the caret to the new line after we add it

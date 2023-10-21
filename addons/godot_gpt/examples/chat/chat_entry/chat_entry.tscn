@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://di8cv15276ai6"]
+
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/chat/chat_entry/chat_entry.gd" id="1_bqvug"]
+
+[node name="chat_entry" type="PanelContainer" node_paths=PackedStringArray("label_node", "text_node")]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_bqvug")
+label_node = NodePath("VBoxContainer/MarginContainer/Label")
+text_node = NodePath("VBoxContainer/MarginContainer2/RichTextLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_right = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "ChatGPT/Me"
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_right = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "what up test
+
+asdf"
+fit_content = true
+scroll_active = false

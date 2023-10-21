@@ -1,14 +1,17 @@
 extends Control
 
 @export var gpt: GPTChatRequest
-@export var chat_text: RichTextLabel
+@export var chat_history_scroll: ScrollContainer
+@export var chat_history: VBoxContainer
 @export var prompt_input: TextEdit
+
+@export var chat_entry_scene: PackedScene
 
 func _ready():
 	gpt.gpt_request_completed.connect(_on_gpt_request_completed)
 
 func _on_gpt_request_completed(response_text: String):
-	add_text_to_chat(response_text, "ChatGPT")
+	add_text_to_chat("ChatGPT", response_text)
 
 func send_chat_request() -> void:
 	var prompt: String = prompt_input.text
@@ -18,13 +21,28 @@ func send_chat_request() -> void:
 	if prompt == "":
 		return
 	
-	gpt.gpt_chat_request(prompt)
-	add_text_to_chat(prompt, "Me")
+	#gpt.gpt_chat_request(prompt)
+	add_text_to_chat("Me", prompt)
 
-func add_text_to_chat(text: String, from: String) -> void:
-	chat_text.text += from + ": " + text
-	if not chat_text.text.ends_with("\n"):
-		chat_text.text += "\n"
+func add_text_to_chat(from: String, text: String) -> void:
+	var chat_entry: Node = chat_entry_scene.instantiate()
+	chat_entry.configure(from, text)
+	
+	# if the user was scrolled to the bottom of the chat history,
+	# we should move their view down to fit the new entry
+	var scroll_to_bottom: bool = false
+	var v_scroll: VScrollBar = chat_history_scroll.get_v_scroll_bar()
+	prints("BEFORE", v_scroll.value, v_scroll.max_value, v_scroll.max_value - v_scroll.page)
+	if v_scroll.value >= v_scroll.max_value - v_scroll.page:
+		scroll_to_bottom = true
+	
+	print(scroll_to_bottom)
+	
+	chat_history.add_child(chat_entry)
+	
+	if scroll_to_bottom:
+		chat_history_scroll.scroll_vertical = int(v_scroll.max_value) + 1
+	prints("AFTER", v_scroll.value, v_scroll.max_value, v_scroll.max_value - v_scroll.page)
 
 func _on_button_pressed():
 	send_chat_request()

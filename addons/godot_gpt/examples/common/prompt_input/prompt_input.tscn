@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckmpdqurkchco"]
+
+[ext_resource type="Script" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.gd" id="1_u5coi"]
+
+[node name="prompt_input" type="TextEdit"]
+custom_minimum_size = Vector2(0, 96)
+size_flags_horizontal = 3
+caret_multiple = false
+script = ExtResource("1_u5coi")
