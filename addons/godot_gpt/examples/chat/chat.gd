@@ -32,17 +32,15 @@ func add_text_to_chat(from: String, text: String) -> void:
 	# we should move their view down to fit the new entry
 	var scroll_to_bottom: bool = false
 	var v_scroll: VScrollBar = chat_history_scroll.get_v_scroll_bar()
-	prints("BEFORE", v_scroll.value, v_scroll.max_value, v_scroll.max_value - v_scroll.page)
 	if v_scroll.value >= v_scroll.max_value - v_scroll.page:
 		scroll_to_bottom = true
-	
-	print(scroll_to_bottom)
 	
 	chat_history.add_child(chat_entry)
 	
 	if scroll_to_bottom:
-		chat_history_scroll.scroll_vertical = int(v_scroll.max_value) + 1
-	prints("AFTER", v_scroll.value, v_scroll.max_value, v_scroll.max_value - v_scroll.page)
+		# must wait for tree to update to be able to change scroll_vertical correctly
+		await get_tree().process_frame
+		chat_history_scroll.scroll_vertical = int(v_scroll.max_value)
 
 func _on_button_pressed():
 	send_chat_request()
