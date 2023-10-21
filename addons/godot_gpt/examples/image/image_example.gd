@@ -49,6 +49,7 @@ func _on_image_request_completed(image: Image):
 func _on_image_request_failed():
 	# Disable the submit button in the input control to indicate failure.
 	prompt_input.set_button_state(false)
+	state_ready = true
 
 # Callback function to handle when a prompt is submitted using the input control.
 func _on_prompt_input_prompt_submitted(prompt: String):
