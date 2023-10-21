@@ -1,61 +1,86 @@
-[gd_scene load_steps=3 format=3 uid="uid://das4l8eywq7at"]
+[gd_scene load_steps=5 format=3 uid="uid://c6lhk5fq6atqq"]
 
-[ext_resource type="Script" path="res://addons/godot_gpt/examples/example.gd" id="1_782gx"]
-[ext_resource type="Script" path="res://addons/godot_gpt/gpt_chat_request.gd" id="2_u3ix2"]
+[ext_resource type="PackedScene" uid="uid://d4jcuwb3v5hfi" path="res://addons/godot_gpt/examples/chat/chat.tscn" id="1_ohi5p"]
+[ext_resource type="PackedScene" uid="uid://d2xa1g2ur8x2i" path="res://addons/godot_gpt/examples/image/image_example.tscn" id="2_gxffp"]
 
-[node name="example" type="Control" node_paths=PackedStringArray("gpt", "chat_text", "prompt_input")]
+[sub_resource type="LabelSettings" id="LabelSettings_5bpil"]
+font_size = 24
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_487ge"]
+color = Color(0.179688, 0.179688, 0.179688, 1)
+thickness = 3
+
+[node name="example" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_782gx")
-gpt = NodePath("GPTChatRequest")
-chat_text = NodePath("MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel")
-prompt_input = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TextEdit")
 
-[node name="GPTChatRequest" type="HTTPRequest" parent="."]
-script = ExtResource("2_u3ix2")
-api_key = "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"
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="example_container" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="example_header" type="HBoxContainer" parent="example_container"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="example_container/example_header"]
 layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
+text = "Chat"
+label_settings = SubResource("LabelSettings_5bpil")
+vertical_alignment = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="spacer" type="Control" parent="example_container/example_header"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="example_container/example_header"]
+layout_mode = 2
+text = "Back"
+
+[node name="HSeparator" type="HSeparator" parent="example_container"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_487ge")
+
+[node name="MarginContainer" type="MarginContainer" parent="example_container"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="chat" parent="example_container/MarginContainer" instance=ExtResource("1_ohi5p")]
+layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="image_example" parent="example_container/MarginContainer" instance=ExtResource("2_gxffp")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 96)
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Ask ChatGPT a question!"
+size_flags_vertical = 3
+text = "what up"
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "Submit"
-
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+size_flags_vertical = 3
