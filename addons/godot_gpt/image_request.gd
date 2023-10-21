@@ -60,3 +60,4 @@ func _image_url_request_completed(result, response_code, headers, body):
 		push_error("Couldn't load the image.")
 	
 	image_request_completed.emit(image)
+	print("Successfully acquired generated image")
