@@ -7,7 +7,7 @@ class_name OpenAIImageRequest
 
 # Exported variables for configuring the image request.
 @export var n: int = 1 # Specifies the number of images to generate per request.
-@export var size: String = "256x256" # Specifies the resolution of the generated images.
+@export var size: Vector2i = Vector2i(256, 256) # Specifies the resolution of the generated images.
 @export var api_key: String # OpenAI API authentication key.
 @export var api_url: String = "https://api.openai.com/v1/images/generations" # URL endpoint for the image generation API.
 
@@ -67,7 +67,7 @@ func image_request(prompt: String):
 	var body = JSON.new().stringify({
 		"prompt": prompt,
 		"n": n,
-		"size": size
+		"size": "{0}x{1}".format([size.x, size.y])
 	})
 	# Make a POST request to the OpenAI API endpoint with the structured body.
 	var error: Error = request(api_url, ["Content-Type: application/json", "Authorization: Bearer " + api_key], HTTPClient.METHOD_POST, body)
