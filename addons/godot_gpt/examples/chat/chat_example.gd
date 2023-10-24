@@ -22,6 +22,8 @@ extends Control
 func _ready():
 	# Connect the signal from GPTChatRequest that is emitted when a request is completed.
 	gpt.gpt_request_completed.connect(_on_gpt_request_completed)
+	# Connect the signal from GPTChatRequest that is emitted when a request fails.
+	gpt.gpt_request_failed.connect(_on_gpt_request_failed)
 	# Connect the signal for when the user submits a prompt.
 	prompt_input.prompt_submitted.connect(send_chat_request)
 
@@ -29,7 +31,14 @@ func _ready():
 func _on_gpt_request_completed(response_text: String):
 	# Add the response from GPT to the chat.
 	add_text_to_chat("ChatGPT", response_text)
-	# Disable the button in the input control.
+	# Enable the button in the input control.
+	prompt_input.set_button_state(false)
+
+# Callback function for when a GPT request has failed.
+func _on_gpt_request_failed():
+	# Add an error message to the chat
+	add_text_to_chat("Error", "Request failed. Did you provide a valid OpenAI API key?")
+	# Enable the button in the input control.
 	prompt_input.set_button_state(false)
 
 # Function to send the user's chat request to GPT.
