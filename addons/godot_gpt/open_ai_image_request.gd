@@ -6,17 +6,23 @@ extends HTTPRequest
 class_name OpenAIImageRequest
 
 # Exported variables for configuring the image request.
-@export var n: int = 1 # Specifies the number of images to generate per request.
-@export var size: Vector2i = Vector2i(256, 256) # Specifies the resolution of the generated images.
-@export var api_key: String # OpenAI API authentication key.
-@export var api_url: String = "https://api.openai.com/v1/images/generations" # URL endpoint for the image generation API.
+## Specifies the number of images to generate per request.
+@export var images_per_request: int = 1
+## Specifies the resolution of the generated images.
+@export var size: Vector2i = Vector2i(256, 256)
+## OpenAI API authentication key.
+@export var api_key: String
+## URL endpoint for the image generation API.
+@export var api_url: String = "https://api.openai.com/v1/images/generations"
 
 # A separate HTTPRequest instance for fetching the actual image from the provided URL.
 var image_http_request: HTTPRequest
 
-## Signals for communicating with external nodes.
-signal image_request_completed ## Emitted when an image is successfully retrieved. Passes the Image object.
-signal image_request_failed ## Emitted in case of any errors during the image generation or retrieval process.
+## Signals for communicating with external objects.
+## Emitted when an image is successfully retrieved
+signal image_request_completed(image: Image)
+## Emitted upon any error during the image generation or retrieval process.
+signal image_request_failed
 
 # Function called when the node is added to the scene. It initializes properties and sets up signal connections.
 func _ready() -> void:
@@ -66,7 +72,7 @@ func image_request(prompt: String):
 	# Structure the request body with the specified parameters.
 	var body = JSON.new().stringify({
 		"prompt": prompt,
-		"n": n,
+		"n": images_per_request,
 		"size": "{0}x{1}".format([size.x, size.y])
 	})
 	# Make a POST request to the OpenAI API endpoint with the structured body.

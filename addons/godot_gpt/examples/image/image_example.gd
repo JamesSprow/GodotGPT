@@ -5,8 +5,7 @@ extends Control
 # Exported variable to store the API key used to interact with the OpenAI Image API.
 @export var api_key: String
 
-# Exported group of variables that are considered "internal".
-# These are likely used for editor-only settings and adjustments.
+# These are used for internal settings and adjustments.
 @export_group("internal")
 # Reference to the OpenAIImageRequest object which handles interactions with the OpenAI Image API.
 @export var image_request: OpenAIImageRequest
