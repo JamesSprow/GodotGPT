@@ -4,7 +4,7 @@ class_name GPTFunction
 
 @export var name: String = ""
 @export_multiline var description: String = ""
-@export var parameters: Dictionary = {}
+@export var parameters: Array[GPTFunctionParam] = []
 
 @export var required_parameters: PackedStringArray = []
 
@@ -31,9 +31,13 @@ class_name GPTFunction
 ## }
 ## [/code]
 func compile() -> Dictionary:
+	var compiled_parameters: Dictionary = {}
+	for param in parameters:
+		compiled_parameters[param.name] = param.compile()
+	
 	return {
 		"name": name,
 		"description": description,
-		"parameters": parameters,
+		"parameters": compiled_parameters,
 		"required": required_parameters
 	}
