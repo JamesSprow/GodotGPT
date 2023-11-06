@@ -18,7 +18,7 @@ class_name GPTRequest
 ## URL endpoint to send requests to
 @export var api_url: String = "https://api.openai.com/v1/chat/completions"
 
-@export_group("function_calls")
+@export_group("Functions")
 enum FUNCTION_MODES {
 	OFF, ## ChatGPT will not try to call a function
 	AUTO ## ChatGPT will either respond with text or a function call
@@ -67,9 +67,20 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 	if failed:
 		gpt_request_failed.emit()
 		return
-
+	
+	var message: Dictionary = response.choices[0].message
+	
+	# Figure out if we need to handle a function call
+	if "function_call" in message:
+		var function_call: Dictionary = message["function_call"]
+		var function_name: String = function_call["name"]
+		var arguments: Dictionary = function_call["arguments"]
+		# emit signal and return early
+		gpt_function_called.emit(function_name, arguments)
+		return
+	
 	# Extract the GPT response text from the parsed data.
-	var gpt_text: String = response.choices[0].message.content
+	var gpt_text: String = message.content
 	# Call a function for any post-processing needed on the GPT response.
 	_request_completed_post_process(gpt_text)
 	
@@ -94,7 +105,7 @@ func gpt_request(prompt: String) -> Error:
 	return gpt_completions_request(messages)
 
 ## Function to send a completions request to ChatGPT
-func gpt_completions_request(messages: Array[Dictionary], functions: Array[Dictionary] = functions_low_level) -> Error:
+func gpt_completions_request(messages: Array[Dictionary], functions: Array[GPTFunction] = functions) -> Error:
 	# Structure the request body with the specified parameters.
 	var body = JSON.new().stringify({
 		"messages": messages,
