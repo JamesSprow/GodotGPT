@@ -117,8 +117,9 @@ func gpt_completions_request(messages: Array[Dictionary]) -> Error:
 	var compiled_functions: Array[Dictionary] = []
 	for function in functions:
 		compiled_functions.append(function.compile())
-	body["functions"] = compiled_functions
-	body["function_call"] = _get_function_mode_string()
+	if not compiled_functions.is_empty():
+		body["functions"] = compiled_functions
+		body["function_call"] = _get_function_mode_string()
 	
 	var body_json = JSON.new().stringify(body)
 	
