@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bit1i4ewwej1d"]
+[gd_scene load_steps=3 format=3 uid="uid://bit1i4ewwej1d"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/function/function_example.gd" id="1_a4do1"]
-[ext_resource type="PackedScene" uid="uid://cyechmip6giuw" path="res://addons/godot_gpt/examples/function/bucket/bucket.tscn" id="2_6bdh4"]
 [ext_resource type="PackedScene" uid="uid://db4dkaa7rodme" path="res://addons/godot_gpt/examples/common/prompt_input/prompt_input.tscn" id="2_wilmk"]
 
 [node name="function" type="Control"]
@@ -24,18 +23,6 @@ grow_vertical = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="bucket1" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_6bdh4")]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="bucket2" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_6bdh4")]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="bucket3" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_6bdh4")]
-layout_mode = 2
-size_flags_vertical = 4
 
 [node name="prompt_input" parent="VBoxContainer" instance=ExtResource("2_wilmk")]
 layout_mode = 2
