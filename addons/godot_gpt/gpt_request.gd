@@ -3,7 +3,8 @@ extends HTTPRequest
 # Define a custom class name "GPTRequest" for easy reference and instantiation in other scripts.
 class_name GPTRequest
 
-## Wrapper class that provides an interface for OpenAI ChatGPT completions requests
+## Wrapper class that provides an interface for OpenAI ChatGPT completions requests. 
+## If you want to maintain a chat history or use functions in a chat environment, use [GPTChatRequest] instead.
 
 # Exported variables for configuration of the GPT request parameters.
 ## Value between 0.0 and 1.0, higher values mean more random responses
@@ -17,11 +18,27 @@ class_name GPTRequest
 ## URL endpoint to send requests to
 @export var api_url: String = "https://api.openai.com/v1/chat/completions"
 
+@export_group("function_calls")
+enum FUNCTION_MODES {
+	OFF, ## ChatGPT will not try to call a function
+	AUTO ## ChatGPT will either respond with text or a function call
+	}
+## Whether or not to use the function API
+@export var function_mode: FUNCTION_MODES = FUNCTION_MODES.AUTO
+
+## [Array] of high level [GPTFunction] objects describing functions that ChatGPT can call. Each high level object is compiled into a [Dictionary] and sent to ChatGPT (along with the contents of [param functions_low_level]) when a request is made.
+@export var functions: Array[GPTFunction] = []
+@export_group("")
+
 # Define signals to notify other nodes when a GPT request is completed or failed.
 ## Emitted when this node receives a valid response from ChatGPT
 signal gpt_request_completed(gpt_text: String)
 ## Emitted when this node receives an invalid response from ChatGPT
 signal gpt_request_failed
+## Emitted when ChatGPT decides to call a function. [br]
+## [param name]: The name of the function ChatGPT wants to call [br]
+## [param arguments]: Arguments ChatGPT provided that should be passed to  the function
+signal gpt_function_called(name: String, arguments: Dictionary)
 
 # Function called when the node is added to the scene. Sets up signal connections.
 func _ready() -> void:
@@ -77,7 +94,7 @@ func gpt_request(prompt: String) -> Error:
 	return gpt_completions_request(messages)
 
 ## Function to send a completions request to ChatGPT
-func gpt_completions_request(messages: Array[Dictionary]) -> Error:
+func gpt_completions_request(messages: Array[Dictionary], functions: Array[Dictionary] = functions_low_level) -> Error:
 	# Structure the request body with the specified parameters.
 	var body = JSON.new().stringify({
 		"messages": messages,
@@ -89,3 +106,11 @@ func gpt_completions_request(messages: Array[Dictionary]) -> Error:
 	var error: Error = request(api_url, ["Content-Type: application/json", "Authorization: Bearer " + api_key], HTTPClient.METHOD_POST, body)
 	# Return any error that might have occurred.
 	return error
+
+func _get_function_mode_string() -> String:
+	match function_mode:
+		FUNCTION_MODES.OFF:
+			return "none"
+		FUNCTION_MODES.AUTO:
+			return "auto"
+	return "none"

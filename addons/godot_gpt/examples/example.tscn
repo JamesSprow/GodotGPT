@@ -121,6 +121,7 @@ horizontal_alignment = 1
 layout_mode = 2
 placeholder_text = "Paste OpenAI API key in this box"
 alignment = 1
+secret = true
 
 [node name="spacer2" type="Control" parent="menu/VBoxContainer"]
 layout_mode = 2
