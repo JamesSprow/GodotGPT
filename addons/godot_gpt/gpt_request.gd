@@ -74,7 +74,7 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 	if "function_call" in message:
 		var function_call: Dictionary = message["function_call"]
 		var function_name: String = function_call["name"]
-		var arguments: Dictionary = function_call["arguments"]
+		var arguments: Dictionary = JSON.parse_string(function_call["arguments"])
 		# emit signal and return early
 		gpt_function_called.emit(function_name, arguments)
 		return
@@ -105,16 +105,25 @@ func gpt_request(prompt: String) -> Error:
 	return gpt_completions_request(messages)
 
 ## Function to send a completions request to ChatGPT
-func gpt_completions_request(messages: Array[Dictionary], functions: Array[GPTFunction] = functions) -> Error:
+func gpt_completions_request(messages: Array[Dictionary]) -> Error:
 	# Structure the request body with the specified parameters.
-	var body = JSON.new().stringify({
+	var body = {
 		"messages": messages,
 		"temperature": temperature,
 		"max_tokens": max_tokens,
 		"model": model
-	})
+	}
+	
+	var compiled_functions: Array[Dictionary] = []
+	for function in functions:
+		compiled_functions.append(function.compile())
+	body["functions"] = compiled_functions
+	body["function_call"] = _get_function_mode_string()
+	
+	var body_json = JSON.new().stringify(body)
+	
 	# Make the HTTP POST request to the GPT API endpoint.
-	var error: Error = request(api_url, ["Content-Type: application/json", "Authorization: Bearer " + api_key], HTTPClient.METHOD_POST, body)
+	var error: Error = request(api_url, ["Content-Type: application/json", "Authorization: Bearer " + api_key], HTTPClient.METHOD_POST, body_json)
 	# Return any error that might have occurred.
 	return error
 

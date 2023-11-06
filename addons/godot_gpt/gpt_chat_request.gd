@@ -32,7 +32,7 @@ func clear_history() -> void:
 
 ## Initiates a chat request to GPT using the provided prompt.
 ## It structures the request based on the ongoing conversation history and sends it to ChatGPT.
-func gpt_chat_request(prompt: String, functions: Array[GPTFunction] = functions) -> Error:
+func gpt_chat_request(prompt: String) -> Error:
 	# Create a dictionary representing the user's message.
 	var message: Dictionary = {
 		"role": "user",
@@ -53,13 +53,11 @@ func gpt_chat_request(prompt: String, functions: Array[GPTFunction] = functions)
 ## Triggers another request to ChatGPT which ChatGPT could respond to with text or another function call
 func gpt_function_respond(function_name: String, response: String) -> Error:
 	# Create the message structure for the request.
-	var message: Array[Dictionary] = [
-		{
+	var message: Dictionary = {
 			"role": "function",
 			"name": function_name,
 			"content": response
-		}
-	]
+	}
 	# Duplicate the current conversation history to avoid directly modifying it.
 	var messages: Array[Dictionary] = history.duplicate()
 	# Append the function result to the list of messages.

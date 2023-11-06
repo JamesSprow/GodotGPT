@@ -35,9 +35,14 @@ func compile() -> Dictionary:
 	for param in parameters:
 		compiled_parameters[param.name] = param.compile()
 	
+	var temp_parameters: Dictionary = {
+		"type": "object",
+		"properties": compiled_parameters
+	}
+	
 	return {
 		"name": name,
 		"description": description,
-		"parameters": compiled_parameters,
+		"parameters": temp_parameters,
 		"required": required_parameters
 	}
