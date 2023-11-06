@@ -1,21 +1,19 @@
 extends Control
 
-@onready var b1 = $VBoxContainer/HBoxContainer/bucket1
-@onready var b2 = $VBoxContainer/HBoxContainer/bucket2
-@onready var b3 = $VBoxContainer/HBoxContainer/bucket3
+var bucket = preload("res://addons/godot_gpt/examples/function/bucket/bucket.tscn")
+var n_buckets: int = 3
 
 var buckets: Array = []
 
 func _ready():
-	b1 = $VBoxContainer/HBoxContainer/bucket1
-	b2 = $VBoxContainer/HBoxContainer/bucket2
-	b3 = $VBoxContainer/HBoxContainer/bucket3
 	
-	buckets = [b1, b2, b3]
 	
-	b1.get_node("VBoxContainer/Label").text = "Bucket 1"
-	b2.get_node("VBoxContainer/Label").text = "Bucket 2"
-	b3.get_node("VBoxContainer/Label").text = "Bucket 3"
+	for i in n_buckets:
+		var b = bucket.instantiate()
+		$VBoxContainer/HBoxContainer.add_child(b)
+		b.set_name("Bucket "+str(i+1))
+		buckets.append(b)
+	
 	update_buckets()
 
 func get_bucket(n: int) -> Control:

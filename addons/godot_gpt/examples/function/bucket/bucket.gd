@@ -8,6 +8,9 @@ var data: Dictionary = {
 	"Green" = 0
 }
 
+func set_name(n: String):
+	$VBoxContainer/Label.text = n
+
 func to_text(d: Dictionary):
 	var r: String = ""
 	for k in d.keys():
