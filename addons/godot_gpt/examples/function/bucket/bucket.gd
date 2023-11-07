@@ -3,13 +3,16 @@ extends Control
 var id: int = 0
 
 var data: Dictionary = {
-	"Red" = 0,
-	"Blue" = 0,
-	"Green" = 0
+	"Red" = 5,
+	"Blue" = 5,
+	"Green" = 5
 }
 
 func set_name(n: String):
 	$VBoxContainer/Label.text = n
+
+func get_bucket_name() -> String:
+	return $VBoxContainer/Label.text
 
 func to_text(d: Dictionary):
 	var r: String = ""

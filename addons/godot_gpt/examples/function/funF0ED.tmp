@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bit1i4ewwej1d"]
+[gd_scene load_steps=12 format=3 uid="uid://bit1i4ewwej1d"]
 
 [ext_resource type="Script" path="res://addons/godot_gpt/examples/function/function_example.gd" id="1_a4do1"]
 [ext_resource type="PackedScene" uid="uid://di8cv15276ai6" path="res://addons/godot_gpt/examples/chat/chat_entry/chat_entry.tscn" id="2_8egmh"]
@@ -32,21 +32,14 @@ description = "The amount of balls to transfer between buckets."
 script = ExtResource("4_0bk2s")
 name = "color"
 type = 0
-arg_enum = ["Red", "Green", "Blue"]
-description = "The color of balls to transfer. Valid values are \"Red\", \"Green\", and \"Blue\". Color must always be specified."
+arg_enum = []
+description = "The color of balls to transfer. Valid values are \"Red\", \"Green\", and \"Blue\"."
 
 [sub_resource type="Resource" id="Resource_r3c4x"]
 script = ExtResource("5_ghg4i")
 name = "move_to_from_color"
 description = "Moves a certain amount of balls of a certain color from a source bucket to a destination bucket."
 parameters = Array[ExtResource("4_0bk2s")]([SubResource("Resource_4s071"), SubResource("Resource_3g14d"), SubResource("Resource_8x5ne"), SubResource("Resource_myl8j")])
-required_parameters = ["from", "to", "amnt", "color"]
-
-[sub_resource type="Resource" id="Resource_dva4f"]
-script = ExtResource("5_ghg4i")
-name = "get_bucket_data"
-description = "returns a string of each bucket's contents, broken down by color."
-parameters = Array[ExtResource("4_0bk2s")]([])
 required_parameters = []
 
 [node name="function" type="Control" node_paths=PackedStringArray("gpt", "chat_history_scroll", "chat_history", "prompt_input")]
@@ -90,5 +83,4 @@ layout_mode = 2
 
 [node name="GPTChatRequest" type="HTTPRequest" parent="."]
 script = ExtResource("3_w1qu0")
-model = "gpt-4"
-functions = Array[ExtResource("5_ghg4i")]([SubResource("Resource_r3c4x"), SubResource("Resource_dva4f")])
+functions = Array[ExtResource("5_ghg4i")]([SubResource("Resource_r3c4x")])
