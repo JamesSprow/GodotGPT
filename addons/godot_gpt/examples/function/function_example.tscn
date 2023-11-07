@@ -57,7 +57,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a4do1")
-api_key = "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"
+api_key = "sk-"
 gpt = NodePath("GPTChatRequest")
 chat_history_scroll = NodePath("VBoxContainer/ScrollContainer")
 chat_history = NodePath("VBoxContainer/ScrollContainer/chat_history")
@@ -90,5 +90,4 @@ layout_mode = 2
 
 [node name="GPTChatRequest" type="HTTPRequest" parent="."]
 script = ExtResource("3_w1qu0")
-model = "gpt-4"
 functions = Array[ExtResource("5_ghg4i")]([SubResource("Resource_r3c4x"), SubResource("Resource_dva4f")])
