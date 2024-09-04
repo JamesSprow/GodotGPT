@@ -40,20 +40,16 @@ func gpt_chat_request(prompt: String) -> Error:
 		"role": "user",
 		"content": prompt
 	}
-	# Duplicate the current conversation history to avoid directly modifying it.
-	var messages: Array[Dictionary] = history.duplicate()
-	# Append the user's message to the list of messages.
-	messages.append(message)
 	
 	# If there is no chat history, insert seed prompt at the beginning
 	if history.is_empty() and not seed_prompt.is_empty():
 		history.append(get_seed_message())
 	
-	# Update the main conversation history with the user's message.
+	# Update the conversation history with the user's message.
 	history.append(message)
 	
 	# Send the updated list of messages to GPT to generate a completion and return any potential error.
-	return gpt_completions_request(messages)
+	return gpt_completions_request(history)
 
 ## Used to respond to a function call ChatGPT decided to make [br]
 ## Triggers another request to ChatGPT which ChatGPT could respond to with text or another function call
